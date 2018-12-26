@@ -8,5 +8,5 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.0'
     implementation 'javax.inject:javax.inject:1'
-    implementation project(':domain')
+    implementation project(':data')
 }
