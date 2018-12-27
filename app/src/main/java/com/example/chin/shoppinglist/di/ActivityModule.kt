@@ -1,13 +1,13 @@
 package com.example.chin.shoppinglist.di
 
-import android.app.Activity
 import android.content.Context
+import com.example.chin.shoppinglist.BaseActivity
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.Job
 
 @Module
-class ActivityModule(val activity: Activity) {
-
+class ActivityModule(val activity: BaseActivity) {
 
     @Provides
     @ActivityScope
@@ -17,8 +17,14 @@ class ActivityModule(val activity: Activity) {
 
     @Provides
     @ActivityScope
-    fun providesActivity(): Activity {
+    fun providesActivity(): BaseActivity {
         return activity
+    }
+
+    @Provides
+    @ActivityScope
+    fun providesActivityJob(): Job {
+        return activity.job
     }
 
 

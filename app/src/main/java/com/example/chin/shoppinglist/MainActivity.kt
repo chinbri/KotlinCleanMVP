@@ -1,14 +1,11 @@
 package com.example.chin.shoppinglist
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.example.chin.presentation.main.MainPresenter
-import com.example.chin.shoppinglist.di.ActivityModule
-import com.example.chin.shoppinglist.di.DaggerActivityComponent
 import com.example.chin.shoppinglist.di.main.MainModule
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     @Inject
     lateinit var presenter: MainPresenter
@@ -18,10 +15,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        DaggerActivityComponent.builder()
-            .applicationComponent((application as ShoppingApplication).applicationComponent)
-            .activityModule(ActivityModule(this))
-            .build().mainComponentBuilder()
+        obtainActivityComponent()
+            .mainComponentBuilder()
             .mainModule(MainModule()).build()
             .inject(this)
 

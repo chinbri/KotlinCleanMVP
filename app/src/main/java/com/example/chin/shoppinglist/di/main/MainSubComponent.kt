@@ -4,6 +4,7 @@ import com.example.chin.shoppinglist.MainActivity
 import dagger.Subcomponent
 
 @Subcomponent(modules = [ MainModule::class ])
+@MainScope
 interface MainSubComponent {
 
     fun inject(homeActivity: MainActivity)

@@ -2,6 +2,7 @@ package com.example.chin.shoppinglist.di
 
 import com.example.chin.shoppinglist.di.main.MainSubComponent
 import dagger.Component
+import kotlinx.coroutines.Job
 
 
 @Component(
@@ -12,5 +13,8 @@ import dagger.Component
 interface ActivityComponent {
 
     fun mainComponentBuilder(): MainSubComponent.Builder
+
+    fun providesJob(): Job
+
 
 }
