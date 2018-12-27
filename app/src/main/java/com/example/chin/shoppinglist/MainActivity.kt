@@ -15,7 +15,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        obtainActivityComponent()
+        activityComponent
             .mainComponentBuilder()
             .mainModule(MainModule()).build()
             .inject(this)

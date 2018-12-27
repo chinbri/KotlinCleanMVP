@@ -10,17 +10,11 @@ abstract class BaseActivity: AppCompatActivity() {
 
     val job: Job = Job()
 
-    lateinit var activityComponent: ActivityComponent
-
-    fun obtainActivityComponent(): ActivityComponent {
-
-        activityComponent = DaggerActivityComponent.builder()
+    val activityComponent : ActivityComponent by lazy{
+        DaggerActivityComponent.builder()
             .applicationComponent((application as ShoppingApplication).applicationComponent)
             .activityModule(ActivityModule(this))
             .build()
-
-        return activityComponent
-
     }
 
     override fun onPause() {
