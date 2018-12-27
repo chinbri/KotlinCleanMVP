@@ -4,4 +4,6 @@ interface MainPresenter {
 
     fun sayHi()
 
+    fun initialize(view: MainView)
+
 }

@@ -5,12 +5,17 @@ import javax.inject.Inject
 
 class MainPresenterImpl @Inject constructor(val mainUseCase: MainUseCase) : MainPresenter {
 
+    lateinit var view: MainView
+
+    override fun initialize(view: MainView) {
+        this.view = view
+    }
+
     override fun sayHi() {
-        println("now call use case")
+        view.showMessage("calling use case...")
         mainUseCase.executeAsync("test"){
-            println(it)
+            view.showMessage(it)
         }
 
-        println("thead not blocked :D")
     }
 }
