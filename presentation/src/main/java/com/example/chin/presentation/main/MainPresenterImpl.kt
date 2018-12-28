@@ -14,7 +14,8 @@ class MainPresenterImpl @Inject constructor(val mainUseCase: MainUseCase) : Main
     override fun sayHi() {
         view.showMessage("calling use case...")
         mainUseCase.executeAsync("test"){
-            view.showMessage(it)
+            view.showMessage("correcto")
+            view.drawList(it)
         }
 
     }

@@ -1,7 +1,7 @@
 package com.example.chin.shoppinglist.di
 
 import android.content.Context
-import com.example.chin.shoppinglist.BaseActivity
+import com.example.chin.shoppinglist.ui.BaseActivity
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.Job

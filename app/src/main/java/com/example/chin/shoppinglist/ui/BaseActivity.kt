@@ -1,6 +1,7 @@
-package com.example.chin.shoppinglist
+package com.example.chin.shoppinglist.ui
 
 import android.support.v7.app.AppCompatActivity
+import com.example.chin.shoppinglist.ShoppingApplication
 import com.example.chin.shoppinglist.di.ActivityComponent
 import com.example.chin.shoppinglist.di.ActivityModule
 import com.example.chin.shoppinglist.di.DaggerActivityComponent
