@@ -4,6 +4,6 @@ import com.example.chin.data.entities.ShoppingLocalEntity
 
 interface MainLocalGateway {
 
-    fun getShoppingItems(): List<ShoppingLocalEntity>
+    suspend fun getShoppingItems(): List<ShoppingLocalEntity>
 
 }

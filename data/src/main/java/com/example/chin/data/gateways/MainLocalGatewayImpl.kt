@@ -1,15 +1,18 @@
 package com.example.chin.data.gateways
 
-import com.example.chin.data.entities.ShoppingLocalEntity
+import com.example.chin.data.dao.ShoppingDataSource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class MainLocalGatewayImpl @Inject constructor(): MainLocalGateway {
+class MainLocalGatewayImpl @Inject constructor(
+    private val shoppingDataSource: ShoppingDataSource
+): MainLocalGateway {
 
-    override fun getShoppingItems(): List<ShoppingLocalEntity> {
-        return listOf(
-            ShoppingLocalEntity("aaa", 2),
-            ShoppingLocalEntity("bbb",43)
-        )
+    override suspend fun getShoppingItems() = withContext(Dispatchers.IO) {
+
+        shoppingDataSource.obtainDao().getAll()
+
     }
 
 }

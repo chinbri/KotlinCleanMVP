@@ -1,3 +1,10 @@
 package com.example.chin.data.entities
 
-data class ShoppingLocalEntity (val name: String, val quantity: Int)
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "shoppingItem")
+data class ShoppingLocalEntity (
+    @PrimaryKey val name: String,
+    val quantity: Int
+)
