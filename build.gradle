@@ -2,8 +2,7 @@
 
 buildscript {
 
-    apply from: './dependencies.gradle'
-
+    apply from: './libraries.gradle'
     repositories {
         google()
         jcenter()
