@@ -29,17 +29,18 @@ class MainActivity : BaseActivity(), MainView {
             .mainModule(MainModule()).build()
             .inject(this)
 
+        setupView()
+
         presenter.initialize(this)
 
-        setupView()
     }
 
     private fun setupView() {
 
         rvShoppingList.adapter = adapter
 
-        btnSayHi.setOnClickListener{
-            presenter.sayHi()
+        btnAddItem.setOnClickListener{
+            presenter.addItem()
         }
     }
 

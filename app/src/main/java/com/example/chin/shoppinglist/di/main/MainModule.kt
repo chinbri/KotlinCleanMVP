@@ -2,8 +2,8 @@ package com.example.chin.shoppinglist.di.main
 
 import com.example.chin.data.gateways.MainLocalGateway
 import com.example.chin.data.gateways.MainLocalGatewayImpl
-import com.example.chin.domain.main.MainUseCase
-import com.example.chin.domain.main.MainUseCaseImpl
+import com.example.chin.domain.main.ObtainListUseCase
+import com.example.chin.domain.main.ObtainListUseCaseImpl
 import com.example.chin.presentation.main.MainPresenter
 import com.example.chin.presentation.main.MainPresenterImpl
 import dagger.Module
@@ -18,7 +18,7 @@ class MainModule {
 
     @Provides
     @MainScope
-    fun providesMainUseCase(impl: MainUseCaseImpl): MainUseCase = impl
+    fun providesMainUseCase(impl: ObtainListUseCaseImpl): ObtainListUseCase = impl
 
     @Provides
     @MainScope

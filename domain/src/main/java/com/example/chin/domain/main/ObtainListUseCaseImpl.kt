@@ -6,14 +6,13 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
-class MainUseCaseImpl @Inject constructor(
+class ObtainListUseCaseImpl @Inject constructor(
     override val job: Job,
     private val mainLocalGateway: MainLocalGateway
-): MainUseCase {
+): ObtainListUseCase {
 
     override suspend fun run(input: String): List<ShoppingItem> {
 
-        delay(5000)
         return mainLocalGateway.getShoppingItems().map {
             ShoppingItem(
                 it.name,

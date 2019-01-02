@@ -9,7 +9,7 @@ import kotlinx.coroutines.Job
 
 abstract class BaseActivity: AppCompatActivity() {
 
-    val job: Job = Job()
+    var job: Job = Job()
 
     val activityComponent : ActivityComponent by lazy{
         DaggerActivityComponent.builder()
@@ -18,8 +18,9 @@ abstract class BaseActivity: AppCompatActivity() {
             .build()
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroy() {
+        super.onDestroy()
         job.cancel()
     }
+
 }
