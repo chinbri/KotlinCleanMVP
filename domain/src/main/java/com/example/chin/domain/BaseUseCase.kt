@@ -1,26 +1,25 @@
 package com.example.chin.domain
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 abstract class BaseUseCase<InputType, OutputType>(job: Job = Job()): UseCase<InputType, OutputType> {
 
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
+    private val ioScope = CoroutineScope(Dispatchers.IO + job)
 
     override fun executeAsync(param: InputType, callback: (OutputType) -> Unit){
 
-        uiScope.launch {
-
-            callback.invoke(run(param))
-
+        ioScope.async {
+            val output = run(param);
+            uiScope.launch {
+                callback.invoke(output)
+            }
         }
 
     }
 
-    override suspend fun executeSync(param: InputType): OutputType{
-        return run(param)
+    override suspend fun executeSync(param: InputType) = withContext(Dispatchers.IO){
+        run(param)
     }
 
     protected abstract suspend fun run(input: InputType):OutputType

@@ -9,10 +9,6 @@ class MainLocalGatewayImpl @Inject constructor(
     private val shoppingDataSource: ShoppingDataSource
 ): MainLocalGateway {
 
-    override suspend fun getShoppingItems() = withContext(Dispatchers.IO) {
-
-        shoppingDataSource.obtainDao().getAll()
-
-    }
+    override suspend fun getShoppingItems() = shoppingDataSource.obtainDao().getAll()
 
 }

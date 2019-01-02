@@ -1,6 +1,10 @@
 package com.example.chin.presentation.main
 
 import com.example.chin.domain.main.MainUseCase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainPresenterImpl @Inject constructor(val mainUseCase: MainUseCase) : MainPresenter {
@@ -17,6 +21,5 @@ class MainPresenterImpl @Inject constructor(val mainUseCase: MainUseCase) : Main
             view.showMessage("correcto")
             view.drawList(it)
         }
-
     }
 }
