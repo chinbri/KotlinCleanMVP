@@ -2,6 +2,8 @@ package com.example.chin.shoppinglist.di.main
 
 import com.example.chin.data.gateways.MainLocalGateway
 import com.example.chin.data.gateways.MainLocalGatewayImpl
+import com.example.chin.domain.add.AddItemUseCase
+import com.example.chin.domain.add.AddItemUseCaseImpl
 import com.example.chin.domain.main.ObtainListUseCase
 import com.example.chin.domain.main.ObtainListUseCaseImpl
 import com.example.chin.presentation.main.MainPresenter
@@ -23,4 +25,8 @@ class MainModule {
     @Provides
     @MainScope
     fun providesMainLocalGateway(impl: MainLocalGatewayImpl): MainLocalGateway = impl
+
+    @Provides
+    @MainScope
+    fun providesAddItemUseCase(impl: AddItemUseCaseImpl): AddItemUseCase = impl
 }

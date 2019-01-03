@@ -1,3 +1,3 @@
 package com.example.chin.domain.entities
 
-data class ShoppingItem (val name: String, val quantity: Int)
+data class ShoppingItem (var name: String, var quantity: Int)

@@ -28,4 +28,21 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"/>
 
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <Button
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:id="@+id/btAccept"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/accept"/>
+
+                <Button
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:id="@+id/btCancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cancel"/>
+        </LinearLayout>
+
+
 </LinearLayout>
