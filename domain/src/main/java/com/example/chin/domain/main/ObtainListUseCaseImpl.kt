@@ -11,7 +11,7 @@ class ObtainListUseCaseImpl @Inject constructor(
     private val mainLocalGateway: MainLocalGateway
 ): ObtainListUseCase {
 
-    override suspend fun run(input: String): List<ShoppingItem> {
+    override suspend fun run(input: Unit): List<ShoppingItem> {
 
         return mainLocalGateway.getShoppingItems().map {
             ShoppingItem(

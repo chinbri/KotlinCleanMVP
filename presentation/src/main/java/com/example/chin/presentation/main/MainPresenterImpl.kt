@@ -19,7 +19,7 @@ class MainPresenterImpl @Inject constructor(
     }
 
     private fun obtainList() {
-        obtainListUseCase.executeAsync("test") {
+        obtainListUseCase.executeAsync(Unit) {
             view.drawList(it)
         }
     }
