@@ -6,4 +6,5 @@ interface MainLocalGateway {
 
     suspend fun getShoppingItems(): List<ShoppingLocalEntity>
 
+    suspend fun insertOrUpdate(input: ShoppingLocalEntity)
 }

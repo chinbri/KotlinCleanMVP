@@ -1,6 +1,6 @@
 package com.example.chin.presentation.main
 
-import com.example.chin.domain.add.AddItemUseCase
+import com.example.chin.domain.add.AddItemOrUpdateUseCase
 import com.example.chin.domain.main.ObtainListUseCase
 import com.example.chin.presentation.navigator.Navigator
 import javax.inject.Inject
@@ -8,7 +8,7 @@ import javax.inject.Inject
 class MainPresenterImpl @Inject constructor(
     private val navigator: Navigator,
     private val obtainListUseCase: ObtainListUseCase,
-    private val addItemUseCase: AddItemUseCase
+    private val addItemOrUpdateUseCase: AddItemOrUpdateUseCase
 ) : MainPresenter {
 
     lateinit var view: MainView
@@ -27,7 +27,7 @@ class MainPresenterImpl @Inject constructor(
     override fun addItem() {
         navigator.displayAddItemDialog(
             {
-                addItemUseCase.executeAsync(it){
+                addItemOrUpdateUseCase.executeAsync(it){
                     obtainList()
                 }
             }
