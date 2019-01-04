@@ -8,7 +8,7 @@ interface UseCase<InputType, OutputType> {
     fun obtainUiScope() = CoroutineScope(Dispatchers.Main + job)
     fun obtainIoScope() = CoroutineScope(Dispatchers.Default + job)
 
-    fun executeAsync(param: InputType, callback: (OutputType) -> Unit){
+    fun executeAsync(param: InputType, callback: (UseCaseResponse<OutputType>) -> Unit){
 
         obtainIoScope().async {
             val output = run(param);
@@ -29,6 +29,12 @@ interface UseCase<InputType, OutputType> {
         run(param)
     }
 
-    suspend fun run(input: InputType):OutputType
+    suspend fun run(input: InputType):UseCaseResponse<OutputType>
+
+}
+
+class UseCaseResponse<OutputType>(val notification: UseCaseNotification? = null, val output:OutputType? = null){
+
+    fun existNotification() = notification != null
 
 }

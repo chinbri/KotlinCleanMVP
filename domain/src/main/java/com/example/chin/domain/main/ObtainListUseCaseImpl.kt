@@ -2,6 +2,7 @@ package com.example.chin.domain.main
 
 import com.example.chin.data.gateways.MainLocalGateway
 import com.example.chin.domain.ObtainListUseCase
+import com.example.chin.domain.UseCaseResponse
 import com.example.chin.domain.entities.ShoppingItem
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -12,15 +13,17 @@ class ObtainListUseCaseImpl @Inject constructor(
     private val mainLocalGateway: MainLocalGateway
 ): ObtainListUseCase {
 
-    override suspend fun run(input: Unit): List<ShoppingItem> {
+    override suspend fun run(input: Unit): UseCaseResponse<List<ShoppingItem>>{
 
-        return mainLocalGateway.getShoppingItems().map {
-            ShoppingItem(
-                it.id,
-                it.name,
-                it.quantity
-            )
-        }
+        return UseCaseResponse(
+            output = mainLocalGateway.getShoppingItems().map {
+                ShoppingItem(
+                    it.id,
+                    it.name,
+                    it.quantity
+                )
+            }
+        )
 
     }
 

@@ -2,6 +2,7 @@ package com.example.chin.data.gateways
 
 import com.example.chin.data.dao.ShoppingDataSource
 import com.example.chin.data.entities.ShoppingLocalEntity
+import com.example.chin.data.exceptions.ItemDuplicatedException
 import javax.inject.Inject
 
 class MainLocalGatewayImpl @Inject constructor(
@@ -12,6 +13,7 @@ class MainLocalGatewayImpl @Inject constructor(
 
     override suspend fun getShoppingItems() = shoppingDao.getAll()
 
+    @Throws(ItemDuplicatedException::class)
     override suspend fun insertOrUpdate(input: ShoppingLocalEntity) {
         val localEntity: ShoppingLocalEntity?
         if(input.id != 0){
@@ -23,12 +25,12 @@ class MainLocalGatewayImpl @Inject constructor(
                 localEntity.quantity = input.quantity
                 shoppingDao.update(localEntity)
             }else{
-                //TODO this should't happen!!
+                //this should't happen!!
             }
 
         }else{
             if(shoppingDao.findByName(input.name) != null){
-                //TODO throw item duplicated exception
+                throw ItemDuplicatedException()
             }else{
                 shoppingDao.insertAll(input)
             }

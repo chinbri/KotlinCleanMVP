@@ -1,8 +1,9 @@
-package com.example.chin.domain.delete
+package com.example.chin.domain.main.delete
 
 import com.example.chin.data.entities.ShoppingLocalEntity
 import com.example.chin.data.gateways.MainLocalGateway
 import com.example.chin.domain.DeleteItemUseCase
+import com.example.chin.domain.UseCaseResponse
 import com.example.chin.domain.entities.ShoppingItem
 import kotlinx.coroutines.Job
 import javax.inject.Inject
@@ -12,13 +13,15 @@ class DeleteItemUseCaseImpl @Inject constructor(
     private val mainLocalGateway: MainLocalGateway
 ) : DeleteItemUseCase {
 
-    override suspend fun run(input: ShoppingItem): List<ShoppingItem> {
+    override suspend fun run(input: ShoppingItem): UseCaseResponse<List<ShoppingItem>> {
 
         mainLocalGateway.deleteItem(ShoppingLocalEntity(input.name, input.quantity, input.id))
 
-        return mainLocalGateway.getShoppingItems().map {
-            ShoppingItem(it.id, it.name, it.quantity)
-        }
+        return UseCaseResponse(
+            output = mainLocalGateway.getShoppingItems().map {
+                ShoppingItem(it.id, it.name, it.quantity)
+            }
+        )
 
     }
 

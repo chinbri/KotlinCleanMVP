@@ -23,15 +23,19 @@ class MainPresenterImpl @Inject constructor(
 
     private fun obtainList() {
         obtainListUseCase.executeAsync(Unit) {
-            view.drawList(it)
+            view.drawList(it.output ?: emptyList())
         }
     }
 
     override fun addItem() {
         navigator.displayAddItemDialog(
             {
-                addItemOrUpdateUseCase.executeAsync(it){
-                    obtainList()
+                addItemOrUpdateUseCase.executeAsync(it){ useCaseResponse ->
+                    if(useCaseResponse.existNotification()){
+                        view.showMessage("Duplicated item")
+                    }else{
+                        obtainList()
+                    }
                 }
             }
         )
@@ -51,7 +55,7 @@ class MainPresenterImpl @Inject constructor(
     override fun onItemDeleted(item: ShoppingItem) {
         //TODO ask user confirmation before delete
         deleteItemUseCase.executeAsync(item){
-            view.drawList(it)
+            view.drawList(it.output ?: emptyList())
         }
     }
 }
