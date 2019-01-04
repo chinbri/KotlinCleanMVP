@@ -7,13 +7,19 @@ import com.example.chin.data.entities.ShoppingLocalEntity
 @Dao
 interface ShoppingDao {
 
-    @Query("SELECT * FROM shoppingItem")
+    companion object {
+        const val TABLE_NAME = "shoppingItem"
+        const val COLUMN_NAME = "name"
+        const val COLUMN_QUANTITY = "quantity"
+    }
+
+    @Query("SELECT * FROM $TABLE_NAME")
     fun getAll(): List<ShoppingLocalEntity>
 
-    @Query("SELECT * FROM shoppingItem WHERE name IN (:userNames)")
+    @Query("SELECT * FROM $TABLE_NAME WHERE $COLUMN_NAME IN (:userNames)")
     fun loadAllByIds(vararg userNames: String): List<ShoppingLocalEntity>
 
-    @Query("SELECT * FROM shoppingItem WHERE name LIKE :name LIMIT 1")
+    @Query("SELECT * FROM $TABLE_NAME WHERE $COLUMN_NAME LIKE :name LIMIT 1")
     fun findByName(name: String): ShoppingLocalEntity?
 
     @Insert

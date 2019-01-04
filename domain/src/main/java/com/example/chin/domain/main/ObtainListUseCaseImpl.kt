@@ -1,6 +1,7 @@
 package com.example.chin.domain.main
 
 import com.example.chin.data.gateways.MainLocalGateway
+import com.example.chin.domain.ObtainListUseCase
 import com.example.chin.domain.entities.ShoppingItem
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

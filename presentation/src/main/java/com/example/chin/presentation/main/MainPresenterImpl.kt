@@ -1,7 +1,7 @@
 package com.example.chin.presentation.main
 
-import com.example.chin.domain.add.AddItemOrUpdateUseCase
-import com.example.chin.domain.main.ObtainListUseCase
+import com.example.chin.domain.AddItemOrUpdateUseCase
+import com.example.chin.domain.ObtainListUseCase
 import com.example.chin.presentation.navigator.Navigator
 import javax.inject.Inject
 
