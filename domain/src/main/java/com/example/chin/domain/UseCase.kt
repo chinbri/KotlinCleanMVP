@@ -6,7 +6,7 @@ interface UseCase<InputType, OutputType> {
 
     val job: Job
     fun obtainUiScope() = CoroutineScope(Dispatchers.Main + job)
-    fun obtainIoScope() = CoroutineScope(Dispatchers.IO + job)
+    fun obtainIoScope() = CoroutineScope(Dispatchers.Default + job)
 
     fun executeAsync(param: InputType, callback: (OutputType) -> Unit){
 
@@ -22,10 +22,10 @@ interface UseCase<InputType, OutputType> {
     /**
      * this method has to be executed inside a coroutine.
      * i.e.:
-     * CoroutineScope(Dispatchers.Main + job).launch { usecase.executeSync("") }
+     * CoroutineScope(Dispatchers.Main + job).launch { usecase.executeSync("whatever") }
      * @see CoroutineScope
      */
-    suspend fun executeSync(param: InputType) = withContext(Dispatchers.IO){
+    suspend fun executeSync(param: InputType) = withContext(Dispatchers.Default){
         run(param)
     }
 
