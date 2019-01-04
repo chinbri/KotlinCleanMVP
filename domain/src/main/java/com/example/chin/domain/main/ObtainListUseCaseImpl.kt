@@ -16,6 +16,7 @@ class ObtainListUseCaseImpl @Inject constructor(
 
         return mainLocalGateway.getShoppingItems().map {
             ShoppingItem(
+                it.id,
                 it.name,
                 it.quantity
             )

@@ -9,6 +9,8 @@ interface ShoppingDao {
 
     companion object {
         const val TABLE_NAME = "shoppingItem"
+
+        const val COLUMN_ID = "id"
         const val COLUMN_NAME = "name"
         const val COLUMN_QUANTITY = "quantity"
     }
@@ -21,6 +23,9 @@ interface ShoppingDao {
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $COLUMN_NAME LIKE :name LIMIT 1")
     fun findByName(name: String): ShoppingLocalEntity?
+
+    @Query("SELECT * FROM $TABLE_NAME WHERE $COLUMN_ID LIKE :id LIMIT 1")
+    fun findById(id: Int): ShoppingLocalEntity?
 
     @Insert
     fun insertAll(vararg users: ShoppingLocalEntity)

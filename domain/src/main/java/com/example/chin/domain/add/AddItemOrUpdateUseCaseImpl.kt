@@ -13,6 +13,6 @@ class AddItemOrUpdateUseCaseImpl @Inject constructor(
 ) : AddItemOrUpdateUseCase {
 
     override suspend fun run(input: ShoppingItem) =
-        mainLocalGateway.insertOrUpdate(ShoppingLocalEntity(input.name, input.quantity))
+        mainLocalGateway.insertOrUpdate(ShoppingLocalEntity(input.name, input.quantity, input.id))
 
 }

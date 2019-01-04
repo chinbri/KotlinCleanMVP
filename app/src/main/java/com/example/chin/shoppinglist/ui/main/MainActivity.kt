@@ -15,7 +15,10 @@ import javax.inject.Inject
 
 class MainActivity : BaseActivity(), MainView {
 
-    val adapter = ShoppingListAdapter()
+    val adapter = ShoppingListAdapter(
+        listener = { presenter.onItemSelected(it) },
+        deleteListener = { presenter.onItemDeleted(it) }
+    )
 
     @Inject
     lateinit var presenter: MainPresenter

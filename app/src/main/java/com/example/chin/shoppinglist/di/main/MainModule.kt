@@ -3,8 +3,10 @@ package com.example.chin.shoppinglist.di.main
 import com.example.chin.data.gateways.MainLocalGateway
 import com.example.chin.data.gateways.MainLocalGatewayImpl
 import com.example.chin.domain.AddItemOrUpdateUseCase
+import com.example.chin.domain.DeleteItemUseCase
 import com.example.chin.domain.ObtainListUseCase
 import com.example.chin.domain.add.AddItemOrUpdateUseCaseImpl
+import com.example.chin.domain.delete.DeleteItemUseCaseImpl
 import com.example.chin.domain.main.ObtainListUseCaseImpl
 import com.example.chin.presentation.main.MainPresenter
 import com.example.chin.presentation.main.MainPresenterImpl
@@ -29,4 +31,8 @@ class MainModule {
     @Provides
     @MainScope
     fun providesAddItemUseCase(impl: AddItemOrUpdateUseCaseImpl): AddItemOrUpdateUseCase = impl
+
+    @Provides
+    @MainScope
+    fun providesDeleteItemUseCase(impl: DeleteItemUseCaseImpl): DeleteItemUseCase = impl
 }

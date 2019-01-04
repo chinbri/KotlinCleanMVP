@@ -14,9 +14,7 @@ import kotlinx.android.synthetic.main.dialog_add_item.*
 
 class AddItemDialogFragment: BaseDialogFragment() {
 
-    private var currentItem: ShoppingItem? = null
-
-    private var addedItem = ShoppingItem("", 0)
+    private lateinit var currentItem: ShoppingItem
 
     private lateinit var listener: AddItemListener
 
@@ -26,7 +24,7 @@ class AddItemDialogFragment: BaseDialogFragment() {
 
         fun getInstance(currentItem: ShoppingItem?, listener: AddItemListener): AddItemDialogFragment{
             val fragment = AddItemDialogFragment()
-            fragment.currentItem = currentItem
+            fragment.currentItem = currentItem ?: ShoppingItem(0,"", 0)
             fragment.listener = listener
             return fragment
         }
@@ -50,22 +48,27 @@ class AddItemDialogFragment: BaseDialogFragment() {
     }
 
     private fun setupView() {
-        etItemName.setText(currentItem?.name)
+        etItemName.setText(currentItem.name)
         etItemName.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(value: Editable?) {
 
-                addedItem.name = value?.toString() ?: ""
+                currentItem.name = value?.toString() ?: ""
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
         })
 
-        etQuantity.setText(currentItem?.quantity?.toString())
+        etQuantity.setText(currentItem.quantity.toString())
         etQuantity.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(value: Editable?) {
 
-                addedItem.quantity = value?.toString()?.toInt() ?: 0
+                try{
+                    currentItem.quantity = value?.toString()?.toInt() ?: 0
+                }catch (e: NumberFormatException){
+                    currentItem.quantity = 0
+                }
+
 
             }
 
@@ -74,7 +77,7 @@ class AddItemDialogFragment: BaseDialogFragment() {
         })
 
         btAccept.setOnClickListener {
-            listener.invoke(addedItem)
+            listener.invoke(currentItem)
             dismiss()
         }
         btCancel.setOnClickListener {

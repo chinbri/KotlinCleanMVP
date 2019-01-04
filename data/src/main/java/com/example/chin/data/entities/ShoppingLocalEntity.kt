@@ -7,10 +7,14 @@ import com.example.chin.data.dao.ShoppingDao
 
 @Entity(tableName = ShoppingDao.TABLE_NAME)
 data class ShoppingLocalEntity (
-    @PrimaryKey
+
     @ColumnInfo(name = ShoppingDao.COLUMN_NAME)
-    val name: String,
+    var name: String,
 
     @ColumnInfo(name = ShoppingDao.COLUMN_QUANTITY)
-    val quantity: Int
+    var quantity: Int,
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = ShoppingDao.COLUMN_ID)
+    val id: Int = 0
 )
