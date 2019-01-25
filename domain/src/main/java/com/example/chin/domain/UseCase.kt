@@ -1,6 +1,7 @@
 package com.example.chin.domain
 
 import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 interface UseCase<InputType, OutputType> {
 
@@ -10,8 +11,8 @@ interface UseCase<InputType, OutputType> {
 
     fun executeAsync(param: InputType, callback: (UseCaseResponse<OutputType>) -> Unit){
 
-        obtainIoScope().async {
-            val output = run(param);
+        obtainIoScope().launch {
+            val output = run(param)
             obtainUiScope().launch {
                 callback.invoke(output)
             }
@@ -25,7 +26,7 @@ interface UseCase<InputType, OutputType> {
      * CoroutineScope(Dispatchers.Main + job).launch { usecase.executeSync("whatever") }
      * @see CoroutineScope
      */
-    suspend fun executeSync(param: InputType) = withContext(Dispatchers.Default){
+    suspend fun executeSync(param: InputType, coroutineContext: CoroutineContext = Dispatchers.Default + job) = withContext(coroutineContext){
         run(param)
     }
 
