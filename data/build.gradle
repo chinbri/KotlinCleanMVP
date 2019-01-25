@@ -1,13 +1,13 @@
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply from: "../dependencies.gradle"
+apply from: "../libraries.gradle"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     testImplementation 'junit:junit:4.12'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation libraries.kotlin
     implementation libraries.kotlin_coroutines_core
     implementation libraries.kotlin_coroutines_android
     implementation libraries.java_inject

@@ -5,14 +5,23 @@ import androidx.room.Room
 import com.example.chin.data.dao.ShoppingDao
 import com.example.chin.data.dao.ShoppingDataSource
 import com.example.chin.data.dao.ShoppingDataSourceImpl
+import com.example.chin.presentation.navigator.Navigator
 import com.example.chin.shoppinglist.database.AppDatabase
+import com.example.chin.shoppinglist.navigator.NavigatorImpl
 import com.example.chin.shoppinglist.ui.BaseActivity
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.Job
 
 @Module
-class ActivityModule(val activity: BaseActivity) {
+class ActivityModule(private val activity: BaseActivity) {
+
+    private val shoppingDao by lazy {
+        Room.databaseBuilder(
+            activity,
+            AppDatabase::class.java, "my_database"
+        ).build().shoppingDao()
+    }
 
     @Provides
     @ActivityScope
@@ -34,15 +43,14 @@ class ActivityModule(val activity: BaseActivity) {
 
     @Provides
     @ActivityScope
+    fun providesNavigator(impl: NavigatorImpl): Navigator = impl
+
+    @Provides
+    @ActivityScope
     fun providesShoppingDataSource(impl: ShoppingDataSourceImpl): ShoppingDataSource = impl
 
     @Provides
     @ActivityScope
-    fun providesShoppingDao(context: Context): ShoppingDao {
-        return Room.databaseBuilder(
-            context,
-            AppDatabase::class.java, "my_database"
-        ).build().shoppingDao()
-    }
+    fun providesShoppingDao() = shoppingDao
 
 }

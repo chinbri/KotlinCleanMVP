@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="wrap_content">
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:padding="20dp"
+>
 
     <TextView
             android:id="@+id/tvName"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toStartOf="@+id/tvQuantity"/>
+            tools:text="Milk"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toStartOf="@+id/tvQuantity"
+    />
 
     <TextView
             android:id="@+id/tvQuantity"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toEndOf="@+id/tvName"
+            android:textSize="20sp"
+            tools:text="26"
+            app:layout_constraintEnd_toStartOf="@id/ivDelete"
+            app:layout_constraintStart_toEndOf="@+id/tvName"
             app:layout_constraintHorizontal_bias="0.5"/>
+
+    <ImageView
+            android:id="@+id/ivDelete"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:padding="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_delete_black"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

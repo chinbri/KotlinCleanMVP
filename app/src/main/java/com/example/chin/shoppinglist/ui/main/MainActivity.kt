@@ -6,6 +6,7 @@ import com.example.chin.domain.entities.ShoppingItem
 import com.example.chin.presentation.main.MainPresenter
 import com.example.chin.presentation.main.MainView
 import com.example.chin.shoppinglist.R
+import com.example.chin.shoppinglist.di.main.AddItemModule
 import com.example.chin.shoppinglist.di.main.MainModule
 import com.example.chin.shoppinglist.ui.BaseActivity
 import com.example.chin.shoppinglist.ui.main.adapter.ShoppingListAdapter
@@ -14,7 +15,10 @@ import javax.inject.Inject
 
 class MainActivity : BaseActivity(), MainView {
 
-    val adapter = ShoppingListAdapter()
+    val adapter = ShoppingListAdapter(
+        listener = { presenter.onItemSelected(it) },
+        deleteListener = { presenter.onItemDeleted(it) }
+    )
 
     @Inject
     lateinit var presenter: MainPresenter
@@ -29,17 +33,18 @@ class MainActivity : BaseActivity(), MainView {
             .mainModule(MainModule()).build()
             .inject(this)
 
+        setupView()
+
         presenter.initialize(this)
 
-        setupView()
     }
 
     private fun setupView() {
 
         rvShoppingList.adapter = adapter
 
-        btnSayHi.setOnClickListener{
-            presenter.sayHi()
+        btnAddItem.setOnClickListener{
+            presenter.addItem()
         }
     }
 
