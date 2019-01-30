@@ -21,15 +21,10 @@ class MainModule {
 
     @Provides
     @MainScope
-    fun providesMainViewModel(
-        activity: BaseActivity,
-        navigator: Navigator,
-        obtainListUseCase: ObtainListUseCase,
-        addItemOrUpdateUseCase: AddItemOrUpdateUseCase,
-        deleteItemUseCase: DeleteItemUseCase
-    ): MainViewModel = ViewModelProviders
-        .of(activity, MainViewModelFactory(navigator, obtainListUseCase, addItemOrUpdateUseCase, deleteItemUseCase))
-        .get(MainViewModel::class.java)
+    fun providesMainViewModel(activity: BaseActivity, mainViewModelFactory: MainViewModelFactory): MainViewModel =
+        ViewModelProviders
+            .of(activity, mainViewModelFactory)
+            .get(MainViewModel::class.java)
 
     @Provides
     @MainScope

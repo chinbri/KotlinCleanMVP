@@ -6,8 +6,9 @@ import com.example.chin.domain.AddItemOrUpdateUseCase
 import com.example.chin.domain.DeleteItemUseCase
 import com.example.chin.domain.ObtainListUseCase
 import com.example.chin.navigator.Navigator
+import javax.inject.Inject
 
-class MainViewModelFactory(
+class MainViewModelFactory @Inject constructor(
     private val navigator: Navigator,
     private val obtainListUseCase: ObtainListUseCase,
     private val addItemOrUpdateUseCase: AddItemOrUpdateUseCase,
