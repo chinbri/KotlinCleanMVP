@@ -1,6 +1,7 @@
 package com.example.chin.shoppinglist.di
 
-import com.example.chin.presentation.navigator.Navigator
+import com.example.chin.navigator.Navigator
+import com.example.chin.shoppinglist.BaseActivity
 import com.example.chin.shoppinglist.di.main.AddItemSubComponent
 import com.example.chin.shoppinglist.di.main.MainSubComponent
 import dagger.Component
@@ -17,6 +18,8 @@ interface ActivityComponent {
     fun mainComponentBuilder(): MainSubComponent.Builder
 
     fun addItemComponentBuilder(): AddItemSubComponent.Builder
+
+    fun providesActivity(): BaseActivity
 
     fun providesJob(): Job
 

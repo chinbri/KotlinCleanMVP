@@ -1,4 +1,4 @@
-package com.example.chin.shoppinglist.ui
+package com.example.chin.shoppinglist
 
 import androidx.appcompat.app.AppCompatActivity
 import com.example.chin.shoppinglist.ShoppingApplication

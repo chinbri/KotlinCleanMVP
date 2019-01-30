@@ -1,4 +1,4 @@
-package com.example.chin.shoppinglist.ui.main
+package com.example.chin.shoppinglist.main.ui
 
 import android.os.Bundle
 import android.text.Editable
@@ -8,8 +8,8 @@ import com.example.chin.domain.AddItemListener
 import com.example.chin.domain.entities.ShoppingItem
 import com.example.chin.shoppinglist.R
 import com.example.chin.shoppinglist.di.main.AddItemModule
-import com.example.chin.shoppinglist.ui.BaseActivity
-import com.example.chin.shoppinglist.ui.BaseDialogFragment
+import com.example.chin.shoppinglist.BaseActivity
+import com.example.chin.shoppinglist.BaseDialogFragment
 import kotlinx.android.synthetic.main.dialog_add_item.*
 
 class AddItemDialogFragment: BaseDialogFragment() {
@@ -22,7 +22,7 @@ class AddItemDialogFragment: BaseDialogFragment() {
 
         val TAG: String? = AddItemDialogFragment::class.java.simpleName
 
-        fun getInstance(currentItem: ShoppingItem?, listener: AddItemListener): AddItemDialogFragment{
+        fun getInstance(currentItem: ShoppingItem?, listener: AddItemListener): AddItemDialogFragment {
             val fragment = AddItemDialogFragment()
             fragment.currentItem = currentItem ?: ShoppingItem(0,"", 0)
             fragment.listener = listener

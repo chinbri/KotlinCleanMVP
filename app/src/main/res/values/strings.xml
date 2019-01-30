@@ -5,4 +5,5 @@
     <string name="quantity">Quantity</string>
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
+    <string name="error">Error!!</string>
 </resources>

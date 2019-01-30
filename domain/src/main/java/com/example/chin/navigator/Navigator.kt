@@ -1,4 +1,4 @@
-package com.example.chin.presentation.navigator
+package com.example.chin.navigator
 
 import com.example.chin.domain.AddItemListener
 import com.example.chin.domain.entities.ShoppingItem

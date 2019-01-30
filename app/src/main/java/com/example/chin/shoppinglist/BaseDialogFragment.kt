@@ -1,4 +1,4 @@
-package com.example.chin.shoppinglist.ui
+package com.example.chin.shoppinglist
 
 import android.os.Bundle
 import android.view.LayoutInflater

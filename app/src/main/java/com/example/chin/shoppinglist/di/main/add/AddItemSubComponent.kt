@@ -1,7 +1,6 @@
 package com.example.chin.shoppinglist.di.main
 
-import com.example.chin.shoppinglist.ui.main.AddItemDialogFragment
-import com.example.chin.shoppinglist.ui.main.MainActivity
+import com.example.chin.shoppinglist.main.ui.AddItemDialogFragment
 import dagger.Subcomponent
 
 @Subcomponent(modules = [ AddItemModule::class ])

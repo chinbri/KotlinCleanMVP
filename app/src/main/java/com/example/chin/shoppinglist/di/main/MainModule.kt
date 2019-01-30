@@ -1,5 +1,6 @@
 package com.example.chin.shoppinglist.di.main
 
+import androidx.lifecycle.ViewModelProviders
 import com.example.chin.data.gateways.MainLocalGateway
 import com.example.chin.data.gateways.MainLocalGatewayImpl
 import com.example.chin.domain.AddItemOrUpdateUseCase
@@ -8,8 +9,10 @@ import com.example.chin.domain.ObtainListUseCase
 import com.example.chin.domain.main.add.AddItemOrUpdateUseCaseImpl
 import com.example.chin.domain.main.delete.DeleteItemUseCaseImpl
 import com.example.chin.domain.main.ObtainListUseCaseImpl
-import com.example.chin.presentation.main.MainPresenter
-import com.example.chin.presentation.main.MainPresenterImpl
+import com.example.chin.navigator.Navigator
+import com.example.chin.shoppinglist.BaseActivity
+import com.example.chin.shoppinglist.main.viewmodel.MainViewModel
+import com.example.chin.shoppinglist.main.viewmodel.MainViewModelFactory
 import dagger.Module
 import dagger.Provides
 
@@ -18,7 +21,15 @@ class MainModule {
 
     @Provides
     @MainScope
-    fun providesMainPresenter(impl: MainPresenterImpl):MainPresenter = impl
+    fun providesMainViewModel(
+        activity: BaseActivity,
+        navigator: Navigator,
+        obtainListUseCase: ObtainListUseCase,
+        addItemOrUpdateUseCase: AddItemOrUpdateUseCase,
+        deleteItemUseCase: DeleteItemUseCase
+    ): MainViewModel = ViewModelProviders
+        .of(activity, MainViewModelFactory(navigator, obtainListUseCase, addItemOrUpdateUseCase, deleteItemUseCase))
+        .get(MainViewModel::class.java)
 
     @Provides
     @MainScope

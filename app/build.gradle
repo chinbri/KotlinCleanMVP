@@ -47,13 +47,15 @@ dependencies {
     kapt libraries.room_compiler
     implementation libraries.room_coroutines
 
+    kapt libraries.live_data_compiler
+    implementation libraries.live_data
+
     //test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     //modules
-    implementation project(':presentation')
     implementation project(':data')
     implementation project(':domain')
 }
