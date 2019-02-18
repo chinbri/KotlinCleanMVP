@@ -4,6 +4,7 @@ import com.example.chin.data.entities.ShoppingLocalEntity
 import com.example.chin.data.exceptions.ItemDuplicatedException
 import com.example.chin.data.gateways.MainLocalGateway
 import com.example.chin.domain.AddItemOrUpdateUseCase
+import com.example.chin.domain.Event
 import com.example.chin.domain.ItemDuplicatedNotification
 import com.example.chin.domain.UseCaseResponse
 import com.example.chin.domain.entities.ShoppingItem
@@ -21,7 +22,7 @@ class AddItemOrUpdateUseCaseImpl @Inject constructor(
             mainLocalGateway.insertOrUpdate(ShoppingLocalEntity(input.name, input.quantity, input.id))
 
         }catch (e: ItemDuplicatedException){
-            return UseCaseResponse(ItemDuplicatedNotification())
+            return UseCaseResponse(Event(ItemDuplicatedNotification()))
         }
 
         return UseCaseResponse()

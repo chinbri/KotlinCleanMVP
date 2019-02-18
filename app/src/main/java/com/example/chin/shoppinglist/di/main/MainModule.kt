@@ -9,10 +9,8 @@ import com.example.chin.domain.ObtainListUseCase
 import com.example.chin.domain.main.add.AddItemOrUpdateUseCaseImpl
 import com.example.chin.domain.main.delete.DeleteItemUseCaseImpl
 import com.example.chin.domain.main.ObtainListUseCaseImpl
-import com.example.chin.navigator.Navigator
 import com.example.chin.shoppinglist.BaseActivity
 import com.example.chin.shoppinglist.main.viewmodel.MainViewModel
-import com.example.chin.shoppinglist.main.viewmodel.MainViewModelFactory
 import dagger.Module
 import dagger.Provides
 
@@ -21,9 +19,9 @@ class MainModule {
 
     @Provides
     @MainScope
-    fun providesMainViewModel(activity: BaseActivity, mainViewModelFactory: MainViewModelFactory): MainViewModel =
+    fun providesMainViewModel(activity: BaseActivity): MainViewModel =
         ViewModelProviders
-            .of(activity, mainViewModelFactory)
+            .of(activity)
             .get(MainViewModel::class.java)
 
     @Provides

@@ -2,26 +2,33 @@ package com.example.chin.shoppinglist.main.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.chin.domain.AddItemOrUpdateUseCase
-import com.example.chin.domain.DeleteItemUseCase
-import com.example.chin.domain.ObtainListUseCase
-import com.example.chin.domain.UseCaseNotification
+import com.example.chin.domain.*
 import com.example.chin.domain.entities.ShoppingItem
 import com.example.chin.navigator.Navigator
 
-class MainViewModel constructor(
-    private val navigator: Navigator,
-    private val obtainListUseCase: ObtainListUseCase,
-    private val addItemOrUpdateUseCase: AddItemOrUpdateUseCase,
-    private val deleteItemUseCase: DeleteItemUseCase
-) : ViewModel() {
+class MainViewModel: ViewModel() {
 
-    var notification: MutableLiveData<UseCaseNotification?> = MutableLiveData()
+    private lateinit var navigator: Navigator
+    private lateinit var obtainListUseCase: ObtainListUseCase
+    private lateinit var addItemOrUpdateUseCase: AddItemOrUpdateUseCase
+    private lateinit var deleteItemUseCase: DeleteItemUseCase
+
+    fun initialize(navigator: Navigator,
+                   obtainListUseCase: ObtainListUseCase,
+                   addItemOrUpdateUseCase: AddItemOrUpdateUseCase,
+                   deleteItemUseCase: DeleteItemUseCase){
+        this.navigator = navigator
+        this.obtainListUseCase = obtainListUseCase
+        this.addItemOrUpdateUseCase = addItemOrUpdateUseCase
+        this.deleteItemUseCase = deleteItemUseCase
+    }
+
+    var eventNotification: MutableLiveData<Event<UseCaseNotification>?> = MutableLiveData()
     var listItems: MutableLiveData<List<ShoppingItem>> = MutableLiveData()
 
     fun obtainList() {
         obtainListUseCase.executeAsync(Unit) {
-            notification.value = it.notification
+            eventNotification.value = it.event
             listItems.value = it.output ?: emptyList()
         }
     }
@@ -31,9 +38,9 @@ class MainViewModel constructor(
             { shoppingItem ->
                 addItemOrUpdateUseCase.executeAsync(shoppingItem){ it ->
 
-                    notification.value = it.notification
+                    eventNotification.value = it.event
 
-                    if(!it.existNotification()){
+                    if(!it.existEventNotification()){
                         obtainList()
                     }
                 }
@@ -46,9 +53,9 @@ class MainViewModel constructor(
             { shoppingItem ->
                 addItemOrUpdateUseCase.executeAsync(shoppingItem){
 
-                    notification.value = it.notification
+                    eventNotification.value = it.event
 
-                    if(!it.existNotification()){
+                    if(!it.existEventNotification()){
                         obtainList()
                     }
                 }
@@ -59,7 +66,7 @@ class MainViewModel constructor(
 
     fun onItemDeleted(item: ShoppingItem) {
         deleteItemUseCase.executeAsync(item){
-            notification.value = it.notification
+            eventNotification.value = it.event
             listItems.value = it.output ?: emptyList()
         }
     }

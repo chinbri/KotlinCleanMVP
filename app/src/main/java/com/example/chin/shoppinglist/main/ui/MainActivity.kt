@@ -11,12 +11,15 @@ import com.example.chin.shoppinglist.di.main.MainModule
 import com.example.chin.shoppinglist.BaseActivity
 import com.example.chin.shoppinglist.main.ui.adapter.ShoppingListAdapter
 import com.example.chin.shoppinglist.main.viewmodel.MainViewModel
+import com.example.chin.shoppinglist.main.viewmodel.MainViewModelInjectWrapper
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
     @Inject
+    lateinit var mainViewModelInjectWrapper: MainViewModelInjectWrapper
+
     lateinit var mainViewModel: MainViewModel
 
     val adapter = ShoppingListAdapter(
@@ -41,14 +44,17 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setupViewModels() {
+
+        mainViewModel = mainViewModelInjectWrapper.obtainViewModel()
+
         mainViewModel.listItems.observe(this,
             Observer {
                 drawList(it)
             })
 
-        mainViewModel.notification.observe(this,
+        mainViewModel.eventNotification.observe(this,
             Observer{
-                if(it is ItemDuplicatedNotification){
+                if(it?.getContentIfNotHandled() is ItemDuplicatedNotification){
                     showMessage(resources.getString(R.string.error))
                 }
             })

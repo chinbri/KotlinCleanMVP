@@ -34,8 +34,8 @@ interface UseCase<InputType, OutputType> {
 
 }
 
-class UseCaseResponse<OutputType>(val notification: UseCaseNotification? = null, val output:OutputType? = null){
+class UseCaseResponse<OutputType>(val event: Event<UseCaseNotification>? = null, val output:OutputType? = null){
 
-    fun existNotification() = notification != null
+    fun existEventNotification() = event != null
 
 }
