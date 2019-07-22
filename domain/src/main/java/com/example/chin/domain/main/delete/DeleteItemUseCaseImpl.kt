@@ -9,11 +9,10 @@ import kotlinx.coroutines.Job
 import javax.inject.Inject
 
 class DeleteItemUseCaseImpl @Inject constructor(
-    override val job: Job,
     private val mainLocalGateway: MainLocalGateway
 ) : DeleteItemUseCase {
 
-    override suspend fun run(input: ShoppingItem): UseCaseResponse<List<ShoppingItem>> {
+    override suspend fun run(job: Job, input: ShoppingItem): UseCaseResponse<List<ShoppingItem>> {
 
         mainLocalGateway.deleteItem(ShoppingLocalEntity(input.name, input.quantity, input.id))
 

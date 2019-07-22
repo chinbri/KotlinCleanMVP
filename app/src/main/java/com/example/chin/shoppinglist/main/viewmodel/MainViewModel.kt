@@ -4,68 +4,47 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.chin.domain.*
 import com.example.chin.domain.entities.ShoppingItem
-import com.example.chin.navigator.Navigator
+import kotlinx.coroutines.Job
 
-class MainViewModel: ViewModel() {
+class MainViewModel(val obtainListUseCase: ObtainListUseCase,
+                    val addItemOrUpdateUseCase: AddItemOrUpdateUseCase,
+                    val deleteItemUseCase: DeleteItemUseCase): ViewModel() {
 
-    private lateinit var navigator: Navigator
-    private lateinit var obtainListUseCase: ObtainListUseCase
-    private lateinit var addItemOrUpdateUseCase: AddItemOrUpdateUseCase
-    private lateinit var deleteItemUseCase: DeleteItemUseCase
-
-    fun initialize(navigator: Navigator,
-                   obtainListUseCase: ObtainListUseCase,
-                   addItemOrUpdateUseCase: AddItemOrUpdateUseCase,
-                   deleteItemUseCase: DeleteItemUseCase){
-        this.navigator = navigator
-        this.obtainListUseCase = obtainListUseCase
-        this.addItemOrUpdateUseCase = addItemOrUpdateUseCase
-        this.deleteItemUseCase = deleteItemUseCase
-    }
+    lateinit var viewJob: Job
 
     var eventNotification: MutableLiveData<Event<UseCaseNotification>?> = MutableLiveData()
     var listItems: MutableLiveData<List<ShoppingItem>> = MutableLiveData()
 
     fun obtainList() {
-        obtainListUseCase.executeAsync(Unit) {
+        obtainListUseCase.executeAsync(Unit, viewJob) {
             eventNotification.value = it.event
             listItems.value = it.output ?: emptyList()
         }
     }
 
-    fun addItem() {
-        navigator.displayAddItemDialog(
-            { shoppingItem ->
-                addItemOrUpdateUseCase.executeAsync(shoppingItem){ it ->
+    fun addItem(shoppingItem: ShoppingItem) {
+        addItemOrUpdateUseCase.executeAsync(shoppingItem, viewJob){
+            eventNotification.value = it.event
 
-                    eventNotification.value = it.event
-
-                    if(!it.existEventNotification()){
-                        obtainList()
-                    }
-                }
+            if(!it.existEventNotification()){
+                obtainList()
             }
-        )
+        }
     }
 
-    fun onItemSelected(item: ShoppingItem) {
-        navigator.displayAddItemDialog(
-            { shoppingItem ->
-                addItemOrUpdateUseCase.executeAsync(shoppingItem){
+    fun onItemSelected(shoppingItem: ShoppingItem) {
+        addItemOrUpdateUseCase.executeAsync(shoppingItem, viewJob){
 
-                    eventNotification.value = it.event
+            eventNotification.value = it.event
 
-                    if(!it.existEventNotification()){
-                        obtainList()
-                    }
-                }
-            },
-            item
-        )
+            if(!it.existEventNotification()){
+                obtainList()
+            }
+        }
     }
 
     fun onItemDeleted(item: ShoppingItem) {
-        deleteItemUseCase.executeAsync(item){
+        deleteItemUseCase.executeAsync(item, viewJob){
             eventNotification.value = it.event
             listItems.value = it.output ?: emptyList()
         }

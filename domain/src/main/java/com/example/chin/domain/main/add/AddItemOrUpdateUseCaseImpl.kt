@@ -12,11 +12,10 @@ import kotlinx.coroutines.Job
 import javax.inject.Inject
 
 class AddItemOrUpdateUseCaseImpl @Inject constructor(
-    override val job: Job,
     private val mainLocalGateway: MainLocalGateway
 ) : AddItemOrUpdateUseCase {
 
-    override suspend fun run(input: ShoppingItem): UseCaseResponse<Unit> {
+    override suspend fun run(job: Job, input: ShoppingItem): UseCaseResponse<Unit> {
         try{
 
             mainLocalGateway.insertOrUpdate(ShoppingLocalEntity(input.name, input.quantity, input.id))

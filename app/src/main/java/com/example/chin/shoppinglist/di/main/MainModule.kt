@@ -1,5 +1,6 @@
 package com.example.chin.shoppinglist.di.main
 
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.example.chin.data.gateways.MainLocalGateway
 import com.example.chin.data.gateways.MainLocalGatewayImpl
@@ -11,6 +12,7 @@ import com.example.chin.domain.main.delete.DeleteItemUseCaseImpl
 import com.example.chin.domain.main.ObtainListUseCaseImpl
 import com.example.chin.shoppinglist.BaseActivity
 import com.example.chin.shoppinglist.main.viewmodel.MainViewModel
+import com.example.chin.shoppinglist.main.viewmodel.MainViewModelFactory
 import dagger.Module
 import dagger.Provides
 
@@ -19,10 +21,7 @@ class MainModule {
 
     @Provides
     @MainScope
-    fun providesMainViewModel(activity: BaseActivity): MainViewModel =
-        ViewModelProviders
-            .of(activity)
-            .get(MainViewModel::class.java)
+    fun providesMainViewModelFactory(mainViewModelFactory: MainViewModelFactory): ViewModelProvider.NewInstanceFactory = mainViewModelFactory
 
     @Provides
     @MainScope

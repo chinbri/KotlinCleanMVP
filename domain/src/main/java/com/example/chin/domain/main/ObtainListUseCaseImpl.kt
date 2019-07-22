@@ -9,11 +9,10 @@ import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class ObtainListUseCaseImpl @Inject constructor(
-    override val job: Job,
     private val mainLocalGateway: MainLocalGateway
 ): ObtainListUseCase {
 
-    override suspend fun run(input: Unit): UseCaseResponse<List<ShoppingItem>>{
+    override suspend fun run(job: Job, input: Unit): UseCaseResponse<List<ShoppingItem>>{
 
         return UseCaseResponse(
             output = mainLocalGateway.getShoppingItems().map {

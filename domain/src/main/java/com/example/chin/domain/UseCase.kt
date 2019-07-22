@@ -5,15 +5,11 @@ import kotlin.coroutines.CoroutineContext
 
 interface UseCase<InputType, OutputType> {
 
-    val job: Job
-    fun obtainUiScope() = CoroutineScope(Dispatchers.Main + job)
-    fun obtainIoScope() = CoroutineScope(Dispatchers.Default + job)
+    fun executeAsync(param: InputType, job: Job, callback: (UseCaseResponse<OutputType>) -> Unit){
 
-    fun executeAsync(param: InputType, callback: (UseCaseResponse<OutputType>) -> Unit){
-
-        obtainIoScope().launch {
-            val output = run(param)
-            obtainUiScope().launch {
+        CoroutineScope(Dispatchers.IO + job).launch {
+            val output = run(job, param)
+            CoroutineScope(Dispatchers.Main + job).launch {
                 callback.invoke(output)
             }
         }
@@ -26,11 +22,11 @@ interface UseCase<InputType, OutputType> {
      * CoroutineScope(Dispatchers.Main + job).launch { usecase.executeSync("whatever") }
      * @see CoroutineScope
      */
-    suspend fun executeSync(param: InputType, coroutineContext: CoroutineContext = Dispatchers.Default + job) = withContext(coroutineContext){
-        run(param)
+    suspend fun executeSync(param: InputType, job: Job, coroutineContext: CoroutineContext = Dispatchers.Default + job) = withContext(coroutineContext){
+        run(job, param)
     }
 
-    suspend fun run(input: InputType):UseCaseResponse<OutputType>
+    suspend fun run(job: Job, input: InputType):UseCaseResponse<OutputType>
 
 }
 

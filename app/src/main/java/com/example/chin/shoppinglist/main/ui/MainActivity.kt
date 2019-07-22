@@ -4,26 +4,34 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.example.chin.domain.ItemDuplicatedNotification
-import com.example.chin.domain.UseCaseNotification
 import com.example.chin.domain.entities.ShoppingItem
+import com.example.chin.navigator.Navigator
 import com.example.chin.shoppinglist.R
 import com.example.chin.shoppinglist.di.main.MainModule
 import com.example.chin.shoppinglist.BaseActivity
 import com.example.chin.shoppinglist.main.ui.adapter.ShoppingListAdapter
 import com.example.chin.shoppinglist.main.viewmodel.MainViewModel
-import com.example.chin.shoppinglist.main.viewmodel.MainViewModelInjectWrapper
+import com.example.chin.shoppinglist.main.viewmodel.MainViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
     @Inject
-    lateinit var mainViewModelInjectWrapper: MainViewModelInjectWrapper
+    lateinit var mainViewModelFactory: MainViewModelFactory
+
+    @Inject
+    lateinit var navigator: Navigator
 
     lateinit var mainViewModel: MainViewModel
 
     val adapter = ShoppingListAdapter(
-        listener = { mainViewModel.onItemSelected(it) },
+        listener = {
+            navigator.displayAddItemDialog(
+                { shoppingItem ->
+                    mainViewModel.onItemSelected(shoppingItem)
+                }, it)
+        },
         deleteListener = { mainViewModel.onItemDeleted(it) }
     )
 
@@ -45,7 +53,9 @@ class MainActivity : BaseActivity() {
 
     private fun setupViewModels() {
 
-        mainViewModel = mainViewModelInjectWrapper.obtainViewModel()
+        mainViewModel = mainViewModelFactory.create(MainViewModel::class.java)
+
+        mainViewModel.viewJob = job
 
         mainViewModel.listItems.observe(this,
             Observer {
@@ -66,7 +76,11 @@ class MainActivity : BaseActivity() {
         rvShoppingList.adapter = adapter
 
         btnAddItem.setOnClickListener{
-            mainViewModel.addItem()
+            navigator.displayAddItemDialog(
+                { shoppingItem ->
+                    mainViewModel.addItem(shoppingItem)
+                }
+            )
         }
 
         mainViewModel.obtainList()
